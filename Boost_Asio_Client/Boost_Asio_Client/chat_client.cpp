@@ -14,7 +14,7 @@ int chat_client_Test::Run()
 		boost::asio::io_service io_service;
 
 		tcp::resolver resolver(io_service);
-		tcp::resolver::query query(/*argv[1]*/"127.0.0.1",/* argv[2]*/"13");
+		tcp::resolver::query query(/*argv[1]*/"127.0.0.1",/* argv[2]*/"13");	//±¾»ú
 		tcp::resolver::iterator iterator = resolver.resolve(query);
 
 
