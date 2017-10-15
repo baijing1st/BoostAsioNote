@@ -3,3 +3,11 @@
 ################################################################################
 
 /Boost_Asio_Test/Boost_Asio_Test.VC.db
+/Boost_Asio_Client/Boost_Asio_Client/Debug
+/Boost_Asio_Client/Debug
+/Boost_Asio_Client/ipch/BOOST_ASIO_CLIENT-65113345
+/Boost_Asio_Client/Boost_Asio_Client.VC.VC.opendb
+/Boost_Asio_Client/Boost_Asio_Client.VC.db
+/Boost_Asio_Server/Boost_Asio_Server/Debug
+/Boost_Asio_Server/Debug
+/Boost_Asio_Server/Boost_Asio_Server.VC.db
