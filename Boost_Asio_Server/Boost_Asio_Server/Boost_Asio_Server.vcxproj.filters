@@ -25,6 +25,12 @@
     <Filter Include="源文件\Ser\Chart">
       <UniqueIdentifier>{8c6ffd70-961a-49dc-9897-5255f83dc9ac}</UniqueIdentifier>
     </Filter>
+    <Filter Include="头文件\Serialization">
+      <UniqueIdentifier>{1d09e0d7-b852-46c4-896c-7f7ca037b45d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\Serialization">
+      <UniqueIdentifier>{b97265b4-f0ae-42f5-9f0b-fcaf741f1559}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -51,6 +57,15 @@
     <ClInclude Include="chat_server.h">
       <Filter>头文件\Ser\Chart</Filter>
     </ClInclude>
+    <ClInclude Include="connection.h">
+      <Filter>头文件\Serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="stock.h">
+      <Filter>头文件\Serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="Serialization_server.h">
+      <Filter>头文件\Serialization</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -70,6 +85,9 @@
     </ClCompile>
     <ClCompile Include="chat_server.cpp">
       <Filter>源文件\Ser\Chart</Filter>
+    </ClCompile>
+    <ClCompile Include="Serialization_server.cpp">
+      <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
