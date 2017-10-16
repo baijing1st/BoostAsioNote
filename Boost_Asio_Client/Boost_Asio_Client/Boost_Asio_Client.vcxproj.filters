@@ -25,6 +25,18 @@
     <Filter Include="源文件\Client\Chart">
       <UniqueIdentifier>{90be1dd9-ccf9-4484-9f65-660afe92fc52}</UniqueIdentifier>
     </Filter>
+    <Filter Include="头文件\Socket">
+      <UniqueIdentifier>{7319c6f6-7304-4939-a3c9-22cc97f25694}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\Socket">
+      <UniqueIdentifier>{ee6a1fad-2d21-408a-915e-b9945a8503e6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\Serialization">
+      <UniqueIdentifier>{b00c9fad-adab-42e6-9e1a-16464799d6cf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\Serialization">
+      <UniqueIdentifier>{580f004d-2ba8-49ef-a3b3-681268d57a36}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -45,6 +57,18 @@
     <ClInclude Include="chat_message.h">
       <Filter>头文件\Client\Chart</Filter>
     </ClInclude>
+    <ClInclude Include="Local_Socket_Client.h">
+      <Filter>头文件\Socket</Filter>
+    </ClInclude>
+    <ClInclude Include="stock.h">
+      <Filter>头文件\Serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="connection.h">
+      <Filter>头文件\Serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="Serialization_client.h">
+      <Filter>头文件\Serialization</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -58,6 +82,12 @@
     </ClCompile>
     <ClCompile Include="chat_client.cpp">
       <Filter>源文件\Client\Chart</Filter>
+    </ClCompile>
+    <ClCompile Include="Local_Socket_Client.cpp">
+      <Filter>源文件\Socket</Filter>
+    </ClCompile>
+    <ClCompile Include="Serialization_client.cpp">
+      <Filter>源文件\Serialization</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
