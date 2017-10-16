@@ -25,47 +25,47 @@ namespace s11n_example {
 			: acceptor_(io_service,
 				boost::asio::ip::tcp::endpoint(boost::asio::ip::tcp::v4(), port))
 		{
-			// Create the data to be sent to each client.
-			std::vector<stock> stocks_;
-			stock s;
-			s.code = "ABC";
-			s.name = "A Big Company";
-			s.open_price = 4.56;
-			s.high_price = 5.12;
-			s.low_price = 4.33;
-			s.last_price = 4.98;
-			s.buy_price = 4.96;
-			s.buy_quantity = 1000;
-			s.sell_price = 4.99;
-			s.sell_quantity = 2000;
-			stocks_.push_back(s);
-			s.code = "DEF";
-			s.name = "Developer Entertainment Firm";
-			s.open_price = 20.24;
-			s.high_price = 22.88;
-			s.low_price = 19.50;
-			s.last_price = 19.76;
-			s.buy_price = 19.72;
-			s.buy_quantity = 34000;
-			s.sell_price = 19.85;
-			s.sell_quantity = 45000;
-			stocks_.push_back(s);
+			//// Create the data to be sent to each client.
+			//std::vector<stock> stocks_;
+			//stock s;
+			//s.code = "ABC";
+			//s.name = "A Big Company";
+			//s.open_price = 4.56;
+			//s.high_price = 5.12;
+			//s.low_price = 4.33;
+			//s.last_price = 4.98;
+			//s.buy_price = 4.96;
+			//s.buy_quantity = 1000;
+			//s.sell_price = 4.99;
+			//s.sell_quantity = 2000;
+			//stocks_.push_back(s);
+			//s.code = "DEF";
+			//s.name = "Developer Entertainment Firm";
+			//s.open_price = 20.24;
+			//s.high_price = 22.88;
+			//s.low_price = 19.50;
+			//s.last_price = 19.76;
+			//s.buy_price = 19.72;
+			//s.buy_quantity = 34000;
+			//s.sell_price = 19.85;
+			//s.sell_quantity = 45000;
+			//stocks_.push_back(s);
 
-			std::ostringstream archive_stream;
-			boost::archive::text_oarchive archive(archive_stream);
-			archive << stocks_;
-			std::string outbound_data_ = archive_stream.str();
+			//std::ostringstream archive_stream;
+			//boost::archive::text_oarchive archive(archive_stream);
+			//archive << stocks_;
+			//std::string outbound_data_ = archive_stream.str();
 
-			Com_Protocol::Package p;
-			p.itype = 1;
-			p.data = outbound_data_;
+			//Com_Protocol::Package p;
+			//p.itype = 1;
+			//p.data = outbound_data_;
 
-			this->package_ = p;
+			//this->package_ = p;
 
 
 			// Start an accept operation for a new connection.
 			connection_ptr new_conn(new connection(acceptor_.get_io_service()));
-
+			connections.insert(new_conn);
 			//conns.push_back(new_conn);
 
 			acceptor_.async_accept(new_conn->socket(),
@@ -90,7 +90,7 @@ namespace s11n_example {
 
 			// Start an accept operation for a new connection.
 			connection_ptr new_conn(new connection(acceptor_.get_io_service()));
-
+			connections.insert(new_conn);
 			//conns.push_back(new_conn);
 
 			acceptor_.async_accept(new_conn->socket(),
@@ -150,16 +150,18 @@ namespace s11n_example {
 					conn->async_write(package_,
 						boost::bind(&server::handle_write, this,
 							boost::asio::placeholders::error, conn));
-
+					package_.clear();
 					std::cout << "Data Read\n";
 				}
-			}
-			else
-			{
-				std::cerr << e.message() << std::endl;
-			}
-			if (!e)
-			{
+				else if (package_.itype == 2)
+				{
+
+				}
+				else if (package_.itype == 3)
+				{
+
+				}
+
 				conn->async_read(package_,
 					boost::bind(&server::handle_read, this,
 						boost::asio::placeholders::error, conn));
@@ -167,14 +169,22 @@ namespace s11n_example {
 			}
 			else
 			{
-				std::cerr << e.message() << std::endl;
+				connections.erase(conn);
+				std::cerr << e.message() << std::endl;    //close
 			}
 		
 		}
 
-		void write(const boost::system::error_code& e)
+		void write(Com_Protocol::Package package, connection_ptr conn)
 		{
+			conn->async_write(package,
+				boost::bind(&server::handle_write, this,
+					boost::asio::placeholders::error,conn));
+		}
 
+		std::set<connection_ptr> getConnections()
+		{
+			return connections;
 		}
 
 	private:
@@ -184,6 +194,8 @@ namespace s11n_example {
 		/// The data to be sent to each client.
 		//std::vector<stock> stocks_;
 		Com_Protocol::Package package_;
+
+		std::set<connection_ptr> connections;
 
 		//std::vector<connection_ptr> conns;
 
@@ -199,12 +211,6 @@ public:
 	{
 		try
 		{
-			//// Check command line arguments.
-			//if (argc != 2)
-			//{
-			//	std::cerr << "Usage: server <port>" << std::endl;
-			//	return 1;
-			//}
 
 			unsigned short port = boost::lexical_cast<unsigned short>("8013");
 
@@ -218,48 +224,51 @@ public:
 			while (std::cin.getline(line, 11))
 			{
 				using namespace std; // For strlen and memcpy.
-				//if (!strcmp("1", line))
-				//{
-				//	std::vector<s11n_example::stock> stocks_;
-				//	s11n_example::stock s;
-				//	s.code = "ABC";
-				//	s.name = "A Big Company";
-				//	s.open_price = 4.56;
-				//	s.high_price = 5.12;
-				//	s.low_price = 4.33;
-				//	s.last_price = 4.98;
-				//	s.buy_price = 4.96;
-				//	s.buy_quantity = 1000;
-				//	s.sell_price = 4.99;
-				//	s.sell_quantity = 2000;
-				//	stocks_.push_back(s);
-				//	s.code = "DEF";
-				//	s.name = "Developer Entertainment Firm";
-				//	s.open_price = 20.24;
-				//	s.high_price = 22.88;
-				//	s.low_price = 19.50;
-				//	s.last_price = 19.76;
-				//	s.buy_price = 19.72;
-				//	s.buy_quantity = 34000;
-				//	s.sell_price = 19.85;
-				//	s.sell_quantity = 45000;
-				//	stocks_.push_back(s);
+				if (!strcmp("1", line))
+				{
+					std::vector<s11n_example::stock> stocks_;
+					s11n_example::stock s;
+					s.code = "ABC";
+					s.name = "A Big Company";
+					s.open_price = 4.56;
+					s.high_price = 5.12;
+					s.low_price = 4.33;
+					s.last_price = 4.98;
+					s.buy_price = 4.96;
+					s.buy_quantity = 1000;
+					s.sell_price = 4.99;
+					s.sell_quantity = 2000;
+					stocks_.push_back(s);
+					s.code = "DEF";
+					s.name = "Developer Entertainment Firm";
+					s.open_price = 20.24;
+					s.high_price = 22.88;
+					s.low_price = 19.50;
+					s.last_price = 19.76;
+					s.buy_price = 19.72;
+					s.buy_quantity = 34000;
+					s.sell_price = 19.85;
+					s.sell_quantity = 45000;
+					stocks_.push_back(s);
 
-				//	std::ostringstream archive_stream;
-				//	boost::archive::text_oarchive archive(archive_stream);
-				//	archive << stocks_;
-				//	std::string outbound_data_ = archive_stream.str();
+					std::ostringstream archive_stream;
+					boost::archive::text_oarchive archive(archive_stream);
+					archive << stocks_;
+					std::string outbound_data_ = archive_stream.str();
 
-				//	Com_Protocol::Package p;
-				//	p.itype = 1;
-				//	p.data = outbound_data_;
+					Com_Protocol::Package p;
+					p.itype = 1;
+					p.data = outbound_data_;
 
-				//	/*conn->async_write(p,
-				//		boost::bind(&server::handle_write, this,
-				//			boost::asio::placeholders::error, conn));*/
+					/*conn->async_write(p,
+						boost::bind(&server::handle_write, this,
+							boost::asio::placeholders::error, conn));*/
 
+					std::set<s11n_example::connection_ptr> connections = server.getConnections();
 
-				//}
+					//std::
+
+				}
 			}
 
 			//io_service.run();

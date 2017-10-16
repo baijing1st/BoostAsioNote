@@ -63,9 +63,6 @@
     <ClInclude Include="stock.h">
       <Filter>头文件\Serialization</Filter>
     </ClInclude>
-    <ClInclude Include="connection.h">
-      <Filter>头文件\Serialization</Filter>
-    </ClInclude>
     <ClInclude Include="Serialization_client.h">
       <Filter>头文件\Serialization</Filter>
     </ClInclude>

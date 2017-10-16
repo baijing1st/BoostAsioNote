@@ -150,7 +150,6 @@
   <ItemGroup>
     <ClInclude Include="chat_client.h" />
     <ClInclude Include="chat_message.h" />
-    <ClInclude Include="connection.h" />
     <ClInclude Include="Local_Socket_Client.h" />
     <ClInclude Include="Serialization_client.h" />
     <ClInclude Include="stdafx.h" />

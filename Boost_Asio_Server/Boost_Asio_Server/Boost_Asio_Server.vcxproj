@@ -152,7 +152,6 @@
     <ClInclude Include="chat_client.h" />
     <ClInclude Include="chat_message.h" />
     <ClInclude Include="chat_server.h" />
-    <ClInclude Include="connection.h" />
     <ClInclude Include="Serialization_server.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="stock.h" />

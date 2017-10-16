@@ -59,7 +59,6 @@ namespace s11n_example {
 		{
 			if (!e)
 			{
-
 				if (package_.itype == 1)
 				{
 					std::vector<stock> stocks_;
@@ -86,6 +85,19 @@ namespace s11n_example {
 					package_.clear();
 
 				}
+				else if (package_.itype == 2)
+				{
+				}
+				else if (package_.itype == 3)
+				{
+				}
+
+				// Successfully established connection. Start operation to read the list
+				// of stocks. The connection::async_read() function will automatically
+				// decode the data that is read from the underlying socket.
+				connection_.async_read(package_,
+					boost::bind(&client::handle_read, this,
+						boost::asio::placeholders::error));
 			}
 			else
 			{
@@ -95,6 +107,8 @@ namespace s11n_example {
 
 			// Since we are not starting a new operation the io_service will run out of
 			// work to do and the client will exit.
+
+
 		}
 
 		void write(Com_Protocol::Package package)
@@ -135,9 +149,9 @@ namespace s11n_example {
 
 } // namespace s11n_example
 
-inline void run1(boost::asio::io_service &io_service){
-	io_service.run();
-}
+//inline void run1(boost::asio::io_service &io_service){
+//	io_service.run();
+//}
 
 class Ser_Client_Test
 {
@@ -146,31 +160,16 @@ public:
 	{
 		try
 		{
-			//// Check command line arguments.
-			//if (argc != 3)
-			//{
-			//	std::cerr << "Usage: client <host> <port>" << std::endl;
-			//	return 1;
-			//}
-
 			boost::asio::io_service io_service;
 			boost::asio::io_service::work m_work(io_service);
-			//boost::asio::ip::tcp::resolver resolver(io_service);
-			//tcp::resolver::query query(/*argv[1]*/"127.0.0.1",/* argv[2]*/"13");	//±¾»ú
-
 			s11n_example::client *client = new s11n_example::client(io_service, "127.0.0.1", "8013");
-			//io_service.run();
+			//boost::thread t(boost::bind(run1,boost::ref(io_service)));
+			boost::thread t;
+			t= boost::thread(boost::bind(&boost::asio::io_service::run, &io_service));
 			
-			boost::thread t(boost::bind(run1,boost::ref(io_service)));
-			
-
 			char line[10];
 			while (std::cin.getline(line, 11))
 			{
-
-
-
-
 				using namespace std; // For strlen and memcpy.
 				if (!strcmp("1" ,  line) )
 				{
@@ -210,11 +209,6 @@ public:
 
 					client->write(p);
 				}
-				/*chat_message msg;
-				msg.body_length(strlen(line));
-				memcpy(msg.body(), line, msg.body_length());
-				msg.encode_header();*/
-				//client.write(msg);
 			}
 
 			client->close();

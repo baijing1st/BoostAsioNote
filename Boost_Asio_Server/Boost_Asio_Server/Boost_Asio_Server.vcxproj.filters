@@ -57,9 +57,6 @@
     <ClInclude Include="chat_server.h">
       <Filter>头文件\Ser\Chart</Filter>
     </ClInclude>
-    <ClInclude Include="connection.h">
-      <Filter>头文件\Serialization</Filter>
-    </ClInclude>
     <ClInclude Include="stock.h">
       <Filter>头文件\Serialization</Filter>
     </ClInclude>
